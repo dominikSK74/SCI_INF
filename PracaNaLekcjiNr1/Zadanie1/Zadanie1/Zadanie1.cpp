@@ -16,10 +16,37 @@ bool check(string tekst)
 	}
 }
 
+// Funkcja 'szyfrCezara' szyfruje podany tekst i zwraca zaszyfrowany tekst
+string szyfrCezara(string tekst)
+{
+	int wartosc;
+	cout << "Podaj wartosc przesuniecia (Wieksza od 0 i mniejsza niz 27!)" << endl;
+	while (true)
+	{
+		cin >> wartosc;
+		if (!(wartosc > 0 && wartosc < 27))
+			cout << endl << "Podaj poprawna wartosc!" << endl;
+		else
+			break;
+	}
+	
+	for (int i = 0; i < tekst.length(); i++)
+	{
+		if (tekst[i] == 32)
+			continue;
+		else if (tekst[i] + wartosc > 122)
+			tekst[i] = 96 + ((tekst[i] + wartosc) - 122);
+		else
+			tekst[i] = tekst[i] + wartosc;
+	}
+	return tekst;
+}
+
 int main()
 {
 	string tekst;
 
+	// Podanie tekstu do szyfrowania
 	cout << "Podaj tekst do szyfrowania (Uzyj jedynie malych liter!)\n";
 	while (true)
 	{
@@ -29,5 +56,39 @@ int main()
 			cout << endl << "Podaj poprawny tekst!" << endl;
 		else
 			break;
+	}
+
+	// Wybór opcji
+	cout << "\nWybierz opcje:" << endl;
+	cout << "1. Szyfr podstawieniowy (szyfr cezara)" << endl;
+	cout << "2. Szyfr przestawieniowy" << endl;
+	cout << "3. Szyfr podstawieniowy i przestawieniowy" << endl;
+	cout << "4. Odszyfruj tekst" << endl;
+	
+	while (true)
+	{
+		int akcja;
+		cin >> akcja;
+
+		switch (akcja)
+		{
+		case 1:
+			tekst = szyfrCezara(tekst);
+			cout << "Zaszyfrowany tekst: " << tekst << endl;
+			break;
+		case 2:
+			cout << "opcja 2";
+			break;
+		case 3:
+			cout << "opcja 3";
+			break;
+		case 4:
+			cout << "opcja 4";
+			break;
+		default:
+			cout << endl << "Podales bledna wartosc!" << endl;
+			continue;
+			break;
+		}
 	}
 }
