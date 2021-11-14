@@ -61,6 +61,26 @@ string obaSzyfry(string tekst)
 	return tmp;
 }
 
+// Odszyfrowanie szyfru cezara
+void odszyfrowanieCezara(string tekst)
+{
+	string tmp;
+	for (int j = 1; j < 27; j++)
+	{
+		tmp = tekst;
+		for (int i = 0; i < tekst.length(); i++)
+		{
+			if (tekst[i] == 32)
+				continue;
+			else if (tekst[i] - j < 97)
+				tmp[i] = 122 - (96 - (tmp[i] - j));
+			else
+				tmp[i] = tmp[i] - j;
+		}
+		cout << tmp << endl;
+	}
+}
+
 int main()
 {
 	string tekst;
@@ -102,7 +122,7 @@ int main()
 			cout << obaSzyfry(tekst) << endl;
 			break;
 		case 4:
-			cout << "opcja 4";
+			odszyfrowanieCezara(tekst);
 			break;
 		default:
 			cout << endl << "Podales bledna wartosc!" << endl;
