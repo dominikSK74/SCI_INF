@@ -42,6 +42,14 @@ string szyfrCezara(string tekst)
 	return tekst;
 }
 
+// Szyfr przestawieniowy
+string szyfrPrzestawieniowy(string tekst)
+{
+	for (int i = 0; i < tekst.length(); i = i + 2)
+		swap(tekst[i], tekst[i + 1]);
+	return tekst;
+}
+
 int main()
 {
 	string tekst;
@@ -77,7 +85,7 @@ int main()
 			cout << "Zaszyfrowany tekst: " << tekst << endl;
 			break;
 		case 2:
-			cout << "opcja 2";
+			cout << "Zaszyfrowany tekst: " << szyfrPrzestawieniowy(tekst) << endl;
 			break;
 		case 3:
 			cout << "opcja 3";
