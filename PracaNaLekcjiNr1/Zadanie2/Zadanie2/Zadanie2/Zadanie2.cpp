@@ -1,6 +1,64 @@
 ﻿#include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+#include <utility>
 using namespace std;
+
+// Przechowywanie wartosci kluczy RSA
+pair <int, int> publiczny;
+pair <int, int> prywatny;
+
+bool czy_pierwsza(int n)
+{
+	if (n < 2)
+		return false; //gdy liczba jest mniejsza niż 2 to nie jest pierwszą
+
+	for (int i = 2; i * i <= n; i++)
+		if (n % i == 0)
+			return false; //gdy znajdziemy dzielnik, to dana liczba nie jest pierwsza
+	return true;
+}
+
+// Algorytm Euklidesa sprawdza czy liczby są względnie pierwsze
+int nwd(int a, int b) 
+{
+	return (a == 0) ? b : nwd(b % a, a);
+}
+
+bool checkNWD(int a, int b) {
+	return (nwd(a, b) == 1);
+}
+
+void rsaGen() 
+{
+	int tab[] = { 2,3,5,7 };
+	int p = tab[1];
+	int q = tab[2];
+	int n = p * q;
+	int fEulera = (p - 1) * (q - 1);
+	int e;
+	int d = 0;
+	while (true) 
+	{
+		srand(time(NULL));
+		e = rand() % fEulera;
+		if (e > 1)
+			if (checkNWD(e,fEulera))
+				break;
+	}
+
+	while (true)
+	{
+		if ((d * e) % fEulera == 1)
+			if(!(d == e))
+				break;
+		d++;
+	}
+	publiczny = make_pair(n, e);
+	prywatny = make_pair(n, d);
+}
 
 // Funkcja 'check' sprawdza czy podany tekst jest zapisany z małych liter
 bool check(string tekst)
@@ -111,6 +169,7 @@ int main()
 	cout << "2. Szyfr przestawieniowy" << endl;
 	cout << "3. Szyfr podstawieniowy i przestawieniowy" << endl;
 	cout << "4. Odszyfruj tekst" << endl;
+	cout << "5. Wygeneruj klucze RSA" << endl;
 
 	while (true)
 	{
@@ -132,10 +191,16 @@ int main()
 		case 4:
 			odszyfr.odszyfrowanieCezara(tekst);
 			break;
+		case 5:
+			rsaGen();
+			cout << "Wartosci klicza publicznego: n = " << publiczny.first << ", e = " << publiczny.second << endl;
+			cout << "Wartosci klicza prywatnego: n = " << prywatny.first << ", d = " << prywatny.second << endl;
+			break;
 		default:
 			cout << endl << "Podales bledna wartosc!" << endl;
 			continue;
 			break;
 		}
 	}
+
 }
